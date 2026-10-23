@@ -1,7 +1,7 @@
 -- Brand and category list pages (/brands/*, /categories/*) read from this table.
 -- scripts/generate-seo-files.ts refills it on every build with the products in the sitemap:
 -- in stock, priced, with an uploaded image and a PIES description.
--- Collation matches partsauthority so joins on line code and part number use its primary key.
+-- Collation matches partsvendor so joins on line code and part number use its primary key.
 CREATE TABLE IF NOT EXISTS catalog_listing (
   path           VARCHAR(255) NOT NULL,
   brand_slug     VARCHAR(120) NOT NULL,

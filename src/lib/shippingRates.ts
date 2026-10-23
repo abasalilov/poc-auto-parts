@@ -1,4 +1,4 @@
-// Shipping prices and rules (FedEx Ground, priced per shipment). Parts Authority bills shipping at cost,
+// Shipping prices and rules (FedEx Ground, priced per shipment). Parts Vendor bills shipping at cost,
 // so these come from its shipping cost data (shipping_data_2026). Re-check them quarterly or when a new
 // cost file arrives; see docs/data-refresh.md.
 

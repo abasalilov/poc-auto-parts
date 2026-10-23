@@ -8,13 +8,13 @@ take the site down.
 
 | Source changes | Regenerate | How | Notes |
 |---|---|---|---|
-| `partsauthority` (stock, cost) | `catalog_listing` (brand and category list pages) | `npm run seo-files` | Builds skip this step (`--skip-catalog`) to protect the database, so it only refills when run by hand. |
-| `partsauthority` | Sitemap and Google Merchant feed (`public/sitemap.xml`, `public/sitemaps/`, `public/feeds/google-merchant.tsv.gz`) | Any deploy (the `prebuild` step), or `npm run seo-files` | Prices in the feed come from `Cost`/`Core_Charge` at build time. |
-| `partsauthority` | `category_shipping_weight` | Run `migrations/2026-10-19-category-shipping-weight.sql` in one TablePlus session | Only matters when the in-stock mix shifts a lot; quarterly is enough. |
+| `partsvendor` (stock, cost) | `catalog_listing` (brand and category list pages) | `npm run seo-files` | Builds skip this step (`--skip-catalog`) to protect the database, so it only refills when run by hand. |
+| `partsvendor` | Sitemap and Google Merchant feed (`public/sitemap.xml`, `public/sitemaps/`, `public/feeds/google-merchant.tsv.gz`) | Any deploy (the `prebuild` step), or `npm run seo-files` | Prices in the feed come from `Cost`/`Core_Charge` at build time. |
+| `partsvendor` | `category_shipping_weight` | Run `migrations/2026-10-19-category-shipping-weight.sql` in one TablePlus session | Only matters when the in-stock mix shifts a lot; quarterly is enough. |
 | `part_dimensions` (new weights/dimensions import) | `category_shipping_weight` | Same migration file | Product shipping prices read `part_dimensions` directly, so they update without this; only the fallback for parts with no dimensions needs the re-run. |
 | `part` (new parts, categories) | `catalog_listing`, sitemap, feed, `category_shipping_weight` | `npm run seo-files`, then the migration file | |
 | `pies_images`, `pies_descriptions`, or new images in the image bucket | `catalog_listing`, sitemap, feed | `npm run seo-files` | A product is only listed and indexed once it has an image and a PIES description. |
-| New shipping cost data from Parts Authority (like `shipping_data_2026`) | Shipping price tiers and surcharges in `src/lib/shippingRates.ts` | Re-run the cost analysis, update that file, deploy | Also review quarterly; FedEx fuel surcharges change weekly. |
+| New shipping cost data from Parts Vendor (like `shipping_data_2026`) | Shipping price tiers and surcharges in `src/lib/shippingRates.ts` | Re-run the cost analysis, update that file, deploy | Also review quarterly; FedEx fuel surcharges change weekly. |
 
 ## Caches (refresh on their own)
 
@@ -33,7 +33,7 @@ After a data change, pages can show old data until these expire. A deploy clears
 
 | When | Task |
 |---|---|
-| After each `partsauthority` update | `npm run seo-files` (or deploy, if the list pages don't need refreshing) |
+| After each `partsvendor` update | `npm run seo-files` (or deploy, if the list pages don't need refreshing) |
 | After each dimensions import | Run the `category_shipping_weight` migration file |
 | Quarterly | Re-run the shipping cost analysis; re-run the `category_shipping_weight` migration file |
 

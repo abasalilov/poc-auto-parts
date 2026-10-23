@@ -16,7 +16,7 @@ CREATE TEMPORARY TABLE tmp_part_billable (PRIMARY KEY (line_code, part_number))
 SELECT d.line_code,
        d.part_number,
        GREATEST(d.weight_lb, CEIL(d.length_in) * CEIL(d.width_in) * CEIL(d.height_in) / 139) AS billable_lb
-  FROM partsauthority pa
+  FROM partsvendor pa
   JOIN part_dimensions d ON d.line_code = pa.Line_Code AND d.part_number = pa.MPN
  WHERE pa.Quantity_Total > 0
    AND d.weight_lb IS NOT NULL
